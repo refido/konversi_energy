@@ -17,23 +17,26 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   List<String> listViewItem = [];
-  String _newValue = "Joules";
+  String _value1 = "Joules";
+  String _value2 = "Kilojoules";
   double _result = 0;
 
-  TextEditingController suhu = new TextEditingController();
+  TextEditingController data1 = new TextEditingController();
+  TextEditingController data2 = new TextEditingController();
 
-  double _inputSuhu = 0;
+  double _input1 = 0;
   var listItem = ["Joules", "Kilojoules", "Electron Volts"];
   void _hitungEnergy() {
     setState(() {
-      _inputSuhu = double.parse(suhu.text);
-      if (_newValue == "Joules")
-        _result = _inputSuhu + 273;
-      else if (_newValue == "Kilojoules")
-        _result = (4 / 5) * _inputSuhu;
+      _input1 = double.parse(data1.text);
+      if (_value1 == "Joules" && _value2 == "Kilojoules") //joules ke kilojoules
+        _result = _input1 / 1000;
+      else if (_value1 == "Kilojoules" &&
+          _value2 == "Joules") //killojoules ke joules
+        _result = _input1 * 1000;
       else
-        _result = (_inputSuhu * 9 / 5) + 32;
-      listViewItem.add("$_newValue : $_result");
+        _result = _input1 * 2;
+      listViewItem.add("$_value1 -> $_value2 = $_result");
     });
   }
 
@@ -55,7 +58,7 @@ class _MyAppState extends State<MyApp> {
           margin: EdgeInsets.all(8),
           child: Column(
             children: [
-              Input(input: suhu),
+              Input(input: data1),
               DropdownButton<String>(
                 items: listItem.map((String value) {
                   return DropdownMenuItem<String>(
@@ -63,16 +66,14 @@ class _MyAppState extends State<MyApp> {
                     child: Text(value),
                   );
                 }).toList(),
-                value: _newValue,
+                value: _value1,
                 onChanged: (String changeValue) {
                   setState(() {
-                    _newValue = changeValue;
+                    _value1 = changeValue;
                     _hitungEnergy();
                   });
                 },
               ),
-              Result(result: _result),
-              Input(input: suhu),
               DropdownButton<String>(
                 items: listItem.map((String value) {
                   return DropdownMenuItem<String>(
@@ -80,10 +81,10 @@ class _MyAppState extends State<MyApp> {
                     child: Text(value),
                   );
                 }).toList(),
-                value: _newValue,
+                value: _value2,
                 onChanged: (String changeValue) {
                   setState(() {
-                    _newValue = changeValue;
+                    _value2 = changeValue;
                     _hitungEnergy();
                   });
                 },
