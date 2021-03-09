@@ -21,21 +21,30 @@ class _MyAppState extends State<MyApp> {
   String _value2 = "Kilojoules";
   double _result = 0;
 
-  TextEditingController data1 = new TextEditingController();
-  TextEditingController data2 = new TextEditingController();
+  TextEditingController data = new TextEditingController();
 
-  double _input1 = 0;
-  var listItem = ["Joules", "Kilojoules", "Electron Volts"];
+  double _input = 0;
+  var listItem = ["Joules", "Kilojoules", "Gram calorie"];
   void _hitungEnergy() {
     setState(() {
-      _input1 = double.parse(data1.text);
+      _input = double.parse(data.text);
       if (_value1 == "Joules" && _value2 == "Kilojoules") //joules ke kilojoules
-        _result = _input1 / 1000;
+        _result = _input / 1000;
       else if (_value1 == "Kilojoules" &&
-          _value2 == "Joules") //killojoules ke joules
-        _result = _input1 * 1000;
-      else
-        _result = _input1 * 2;
+          _value2 == "Joules") //kilojoules ke joules
+        _result = _input * 1000;
+      else if (_value1 == "Joules" &&
+          _value2 == "Gram calorie") //joules ke gram calorie
+        _result = _input / 4.184;
+      else if (_value1 == "Kilojoules" &&
+          _value2 == "Gram calorie") //kilojoules ke gram calorie
+        _result = _input / 240;
+      else if (_value1 == "Gram calorie" &&
+          _value2 == "Joules") //gram calorie ke joules
+        _result = _input * 4.184;
+      else if (_value1 == "Gram calorie" &&
+          _value2 == "Kilojoules") //gram calorie ke kilojoules
+        _result = _input / 240;
       listViewItem.add("$_value1 -> $_value2 = $_result");
     });
   }
@@ -58,7 +67,7 @@ class _MyAppState extends State<MyApp> {
           margin: EdgeInsets.all(8),
           child: Column(
             children: [
-              Input(input: data1),
+              Input(input: data),
               DropdownButton<String>(
                 items: listItem.map((String value) {
                   return DropdownMenuItem<String>(
