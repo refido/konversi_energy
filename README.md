@@ -1,5 +1,5 @@
 ## Hasil run
-![gambar 5](screen shot/1.jpeg)
+![gambar 1](screenshot/1.jpeg)
 
 
 
